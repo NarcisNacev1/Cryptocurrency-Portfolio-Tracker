@@ -1,14 +1,11 @@
-# test_transactions.py
-
-import json
 from Backend.tests.conftest import test_client, init_database, get_jwt_token
+import json
 
-# Test for adding a transaction with specific ID
+
 def test_add_transaction(test_client, init_database):
-    # Obtain JWT token
+
     jwt_token = get_jwt_token(test_client)
 
-    # Make a POST request with authentication header
     headers = {'Authorization': f'Bearer {jwt_token}'}
     response = test_client.post('/transactions',
                                 data=json.dumps({
@@ -25,12 +22,10 @@ def test_add_transaction(test_client, init_database):
     assert b'Transaction was made successfully' in response.data
 
 
-# Test for viewing transactions
 def test_view_transactions(test_client):
-    # Obtain JWT token
+
     jwt_token = get_jwt_token(test_client)
 
-    # Make a GET request with authentication header
     headers = {'Authorization': f'Bearer {jwt_token}'}
     response = test_client.get('/transactions', headers=headers)
 
@@ -39,12 +34,10 @@ def test_view_transactions(test_client):
     assert isinstance(data, list)
 
 
-# Test for getting portfolio value
 def test_get_portfolio_value(test_client):
-    # Obtain JWT token
+
     jwt_token = get_jwt_token(test_client)
 
-    # Make a GET request with authentication header
     headers = {'Authorization': f'Bearer {jwt_token}'}
     response = test_client.get('/portfolio', headers=headers)
 
@@ -53,16 +46,10 @@ def test_get_portfolio_value(test_client):
     assert 'total_value' in data
 
 
-# Test for updating a transaction
-import json
-
-import json
-
 def test_update_transaction(test_client, init_database):
-    # Obtain JWT token
+
     jwt_token = get_jwt_token(test_client)
 
-    # Make a POST request to add a transaction first
     headers = {'Authorization': f'Bearer {jwt_token}'}
     response = test_client.post('/transactions',
                                 data=json.dumps({
@@ -77,12 +64,9 @@ def test_update_transaction(test_client, init_database):
 
     assert response.status_code == 201
 
-    # Get transaction ID from response
     response_json = json.loads(response.data)
-    transaction_id = response_json.get('id')  # Use .get() to safely get id or None
+    transaction_id = response_json.get('id')
 
-
-    # Make a PUT request to update the transaction
     response = test_client.put(f'/transactions/update/{transaction_id}',
                                data=json.dumps({
                                    'amount': 0.75
@@ -91,14 +75,10 @@ def test_update_transaction(test_client, init_database):
                                content_type='application/json')
 
 
-
-
-
 def test_delete_transaction(test_client, init_database):
-    # Obtain JWT token
+
     jwt_token = get_jwt_token(test_client)
 
-    # Make a POST request to add a transaction first
     headers = {'Authorization': f'Bearer {jwt_token}'}
     response = test_client.post('/transactions',
                                 data=json.dumps({
@@ -111,19 +91,16 @@ def test_delete_transaction(test_client, init_database):
                                 headers=headers,
                                 content_type='application/json')
 
-    assert response.status_code == 201  # Check if transaction creation was successful
+    assert response.status_code == 201
 
-    # Extract transaction ID from the response
     response_json = json.loads(response.data)
     transaction_id = response_json.get('id')
 
 
-
 def test_get_historical_data(test_client, init_database):
-    # Obtain JWT token
+
     jwt_token = get_jwt_token(test_client)
 
-    # Make a GET request with authentication header
     headers = {'Authorization': f'Bearer {jwt_token}'}
     response = test_client.get('/transactions/history',
                                headers=headers,
@@ -134,10 +111,8 @@ def test_get_historical_data(test_client, init_database):
     assert isinstance(data, list)
 
 
-# Test for registering a new user
-
 def test_register_user(test_client, init_database):
-    # Make a POST request to register a new user
+
     response = test_client.post('/register',
                                 data=json.dumps({
                                     'username': 'test1user',
@@ -145,10 +120,11 @@ def test_register_user(test_client, init_database):
                                 }),
                                 content_type='application/json')
 
-    assert response.status_code == 201  # Expected status
+    assert response.status_code == 201
+
 
 def test_login_user(test_client, init_database):
-    # First, register a new user
+
     test_client.post('/register',
                      data=json.dumps({
                          'username': 'testuser',
@@ -156,7 +132,6 @@ def test_login_user(test_client, init_database):
                      }),
                      content_type='application/json')
 
-    # Make a POST request to login with the registered user
     response = test_client.post('/login',
                                 data=json.dumps({
                                     'username': 'testuser',
@@ -164,4 +139,4 @@ def test_login_user(test_client, init_database):
                                 }),
                                 content_type='application/json')
 
-    assert response.status_code == 200  # Expected status code for successful login
+    assert response.status_code == 200

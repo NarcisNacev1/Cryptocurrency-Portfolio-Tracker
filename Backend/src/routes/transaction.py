@@ -14,7 +14,7 @@ def add_transaction():
     try:
         data = request.get_json()
         session['last_transaction'] = data
-        print("Session data set:", session['last_transaction'])  # Debugging print
+        print("Session data set:", session['last_transaction'])
 
         transaction = Transaction(
             user_id=data['user_id'],
@@ -59,7 +59,7 @@ def delete_transaction(id):
     try:
         transaction = Transaction.query.get_or_404(id)
         db.session.delete(transaction)
-        db.session.commit()  # Corrected typo from db.session.commir()
+        db.session.commit()
         return jsonify({'message': 'Transaction deleted successfully'})
     except Exception as e:
         db.session.rollback()
@@ -84,7 +84,7 @@ def delete_all_transactions():
 @transaction_routes.route('/session_data', methods=['GET'])
 @jwt_required()
 def view_session():
-    session_data = dict(session)  # Retrieve session data
+    session_data = dict(session)
     return jsonify(session_data), 200
 
 

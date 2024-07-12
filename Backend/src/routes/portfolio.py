@@ -44,13 +44,13 @@ def get_advanced_portfolio_value():
         for transaction in transactions:
             crypto = transaction.cryptocurrency
             if crypto not in portfolio:
-                portfolio[crypto] = Decimal('0')  # Initialize as Decimal
+                portfolio[crypto] = Decimal('0')
             if transaction.transaction_type == 'buy':
                 portfolio[crypto] += transaction.amount
             elif transaction.transaction_type == 'sell':
                 portfolio[crypto] -= transaction.amount
 
-        total_value = Decimal('0')  # Initialize as Decimal
+        total_value = Decimal('0')
         for crypto, amount in portfolio.items():
             try:
                 current_price = get_crypto_prices(crypto)
