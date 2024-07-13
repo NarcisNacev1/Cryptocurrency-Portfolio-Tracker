@@ -158,6 +158,7 @@
 ## Additional Information
 - **Postman Documentation:** The repository includes a Postman collection in the `documentation` folder. Import this collection into Postman to easily test the API endpoints.
 - **Database Configuration:** If you encounter issues with the database, ensure that you have configured it correctly in the configuration file and that PostgreSQL is running on your machine.
+- **Prepopulated PostgreSQL Data**: The repository includes PostgreSQL documentation with prepopulated data in the `documentation` folder. Use this to quickly set up your database with sample data.
 
 ### Troubleshooting
 - If you face issues with the Flask application not being found, set the Flask app path using:
