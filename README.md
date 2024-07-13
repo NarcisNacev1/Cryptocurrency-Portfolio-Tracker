@@ -1,75 +1,176 @@
-<<<<<<< HEAD
-# Cryptocurrency-Portfolio-Tracker
-Develop a Flask-based application that tracks a user's cryptocurrency portfolio by fetching real-time prices, allows for the recording of buy/sell transactions, calculates the portfolio's current value, and stores transaction data in a PostgreSQL database.
-=======
-# Getting Started with Create React App
+# Cryptocurrency Portfolio Tracker
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Key Features
+- Real-time cryptocurrency price updates using an external API.
+- Functionality for users to add and manage (CRUD) cryptocurrency transactions.
+- Portfolio valuation and performance metrics.
+- Utilization of advanced Python features and PostgreSQL for data handling and storage.
 
-## Available Scripts
+## Tools and Technologies
+- **Backend Framework:** Flask
+- **Database:** PostgreSQL
+- **ORM:** SQLAlchemy
+- **External API:** CoinGecko API (or any preferred free cryptocurrency API)
+- **Testing Tool:** Postman
 
-In the project directory, you can run:
+## Instructions for Use
 
-### `npm start`
+### Setup
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1. **Clone the repository:**
+    ```sh
+    git clone https://github.com/NarcisNacev1/Cryptocurrency-Portfolio-Tracker.git
+    cd Cryptocurrency-Portfolio-Tracker
+    ```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+2. **Create a virtual environment and activate it:**
+    ```sh
+    python -m venv venv
+    source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
+    ```
 
-### `npm test`
+3. **Install dependencies:**
+    ```sh
+    pip install -r requirements.txt
+    ```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+4. **Configure the environment variables:**
+    - Create a `.env` file in the root directory and add the following lines:
+        ```sh
+        FLASK_APP=Backend.src
+        FLASK_ENV=development
+        ```
 
-### `npm run build`
+5. **Set up the database:**
+    - Replace the following line in your configuration file with your database details:
+        ```python
+        SQLALCHEMY_DATABASE_URI = 'postgresql://username:password@host:port/database_name'
+        ```
+    - Run the following commands to initialize and migrate the database:
+        ```sh
+        flask db init
+        flask db migrate -m "Initial migration"
+        flask db upgrade
+        ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Running the Application
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. **Start the Flask server:**
+    ```sh
+    flask run
+    ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. **Open Postman and use the following routes to interact with the API:**
 
-### `npm run eject`
+    - **Register a new user:**
+        - **URL:** `http://127.0.0.1:5000/register`
+        - **Method:** POST
+        - **Body:**
+            ```json
+            {
+                "username": "Marko",
+                "password": "555555"
+            }
+            ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+    - **Login:**
+        - **URL:** `http://127.0.0.1:5000/login`
+        - **Method:** POST
+        - **Body:**
+            ```json
+            {
+                "username": "Marko",
+                "password": "555555"
+            }
+            ```
+        - **Note:** Upon successful login, you will receive an authorization token which should be included in the headers for subsequent requests:
+            ```
+            Authorization: Bearer <token>
+            ```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+    - **Add a transaction:**
+        - **URL:** `http://127.0.0.1:5000/transactions`
+        - **Method:** POST
+        - **Body:**
+            ```json
+            {
+                "user_id": "2",
+                "cryptocurrency": "dogecoin",
+                "amount": "1",
+                "transaction_type": "buy",
+                "transaction_price": "55"
+            }
+            ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+    - **View transactions:**
+        - **URL:** `http://127.0.0.1:5000/transactions`
+        - **Method:** GET
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+    - **Add portfolio value history:**
+        - **URL:** `http://127.0.0.1:5000/transactions/history`
+        - **Method:** POST
+        - **Body:**
+            ```json
+            {
+                "user_id": "2",
+                "date": "2023-07-10",
+                "value": "3000"
+            }
+            ```
 
-## Learn More
+    - **View portfolio value history:**
+        - **URL:** `http://127.0.0.1:5000/transactions/history`
+        - **Method:** GET
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+    - **View session data:**
+        - **URL:** `http://127.0.0.1:5000/session_data`
+        - **Method:** GET
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+    - **View portfolio value:**
+        - **URL:** `http://127.0.0.1:5000/portfolio`
+        - **Method:** GET
 
-### Code Splitting
+    - **View advanced portfolio value:**
+        - **URL:** `http://127.0.0.1:5000/portfolio/advanced`
+        - **Method:** GET
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+    - **Delete a transaction:**
+        - **URL:** `http://127.0.0.1:5000/transactions/delete/<transaction_id>`
+        - **Method:** DELETE
 
-### Analyzing the Bundle Size
+    - **Delete all transactions:**
+        - **URL:** `http://127.0.0.1:5000/transactions/delete/all`
+        - **Method:** DELETE
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+    - **Update a transaction:**
+        - **URL:** `http://127.0.0.1:5000/transactions/update/<transaction_id>`
+        - **Method:** PUT
+        - **Body:**
+            ```json
+            {
+                "user_id": "2",
+                "cryptocurrency": "bitcoin",
+                "amount": "3",
+                "transaction_type": "buy"
+            }
+            ```
 
-### Making a Progressive Web App
+## Additional Information
+- **Postman Documentation:** The repository includes a Postman collection in the `documentation` folder. Import this collection into Postman to easily test the API endpoints.
+- **Database Configuration:** If you encounter issues with the database, ensure that you have configured it correctly in the configuration file and that PostgreSQL is running on your machine.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Troubleshooting
+- If you face issues with the Flask application not being found, set the Flask app path using:
+    ```sh
+    $env:FLASK_APP="Backend.src"  # On Windows PowerShell
+    export FLASK_APP=Backend.src  # On Unix-based systems
+    ```
 
-### Advanced Configuration
+- To resolve database issues, make sure to initialize and migrate the database using the following commands:
+    ```sh
+    flask db init
+    flask db migrate -m "Description of changes"
+    flask db upgrade
+    ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
->>>>>>> d48e923 (PortfolioTrackerCode)
+Feel free to reach out if you encounter any issues or need further assistance.
