@@ -3,29 +3,74 @@ from Backend.src.models import Transaction
 from Backend.src.extensions import db
 from flask_jwt_extended import jwt_required
 from Backend.src.models import PortfolioHistory
-
+from Backend.src.services.crypto import get_crypto_prices
+from Backend.src.services.crypto import get_cryptos
+from flask_jwt_extended import get_jwt_identity
+from Backend.src.models import User
+import logging
 
 transaction_routes = Blueprint('transactions', __name__)
+logger = logging.getLogger(__name__)
+
+CRYPTOCURRENCIES = ["bitcoin",
+    "ethereum",
+    "litecoin",
+    "ripple",
+    "dogecoin",
+    "cardano",
+    "polkadot",
+    "solana",
+    "chainlink",
+    "uniswap"
+]
+
+
+@transaction_routes.route('/prices', methods=['GET'])
+@jwt_required()
+def view_prices():
+   try:
+       prices = get_cryptos(CRYPTOCURRENCIES)
+       response = {
+           "message": 'Current prices of top 10 cryptocurrencies in USD',
+           "prices": prices
+       }
+       return jsonify(response) , 200
+   except Exception as e:
+       return jsonify({'error:': str(e)}), 500
 
 
 @transaction_routes.route('/transactions', methods=["POST"])
 @jwt_required()
 def add_transaction():
+    current_user = get_jwt_identity()
+    current_username = current_user['username']
+
+    user = User.query.filter_by(username=current_username).first()
+    if not user:
+        return jsonify({'msg': 'User not found'}), 404
+
+    user_id = user.id
+    request_user_id = request.json.get('user_id')
+
+    if request_user_id != user_id:
+        return jsonify({'msg': 'Unauthorized'}), 403
+
     try:
         data = request.get_json()
         session['last_transaction'] = data
-        print("Session data set:", session['last_transaction'])
+        logger.debug("Session data set: %s", session['last_transaction'])
+        crypto_price = get_crypto_prices(data['cryptocurrency'])
 
         transaction = Transaction(
             user_id=data['user_id'],
             cryptocurrency=data['cryptocurrency'],
             amount=data['amount'],
             transaction_type=data['transaction_type'],
-            transaction_price=data['transaction_price']
+            transaction_price=crypto_price
         )
         db.session.add(transaction)
         db.session.commit()
-        return jsonify({'message': 'Transaction was made successfully'}), 201
+        return jsonify({'msg': 'Transaction was made successfully'}), 201
     except Exception as e:
         db.session.rollback()
         return jsonify({'error': str(e)}), 500
@@ -42,6 +87,19 @@ def view_transactions():
 @jwt_required()
 def update_transaction(id):
     try:
+        current_user = get_jwt_identity()
+        current_username = current_user['username']
+
+        user = User.query.filter_by(username=current_username).first()
+        if not user:
+            return jsonify({'msg': 'User not found'}), 404
+
+        user_id = user.id
+        request_user_id = request.json.get('user_id')
+
+        if request_user_id != user_id:
+            return jsonify({'msg': 'Unauthorized'}), 403
+
         data = request.get_json()
         transaction = Transaction.query.get_or_404(id)
         transaction.amount = data.get('amount', transaction.amount)
@@ -64,7 +122,6 @@ def delete_transaction(id):
     except Exception as e:
         db.session.rollback()
         return jsonify({'error': str(e)}), 500
-
 
 
 @transaction_routes.route('/transactions/delete/all', methods=['DELETE'])

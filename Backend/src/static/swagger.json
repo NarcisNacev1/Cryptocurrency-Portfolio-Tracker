@@ -1,0 +1,360 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Cryptocurrency Portfolio Tracker",
+    "description": "API for cryptocurrency portfolio management",
+    "version": "1.0.0"
+  },
+  "basePath": "/",
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "paths": {
+    "/register": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Register a new user",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RegisterRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User registered successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Login a user",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LoginRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Login successful"
+          },
+          "401": {
+            "description": "Invalid credentials"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/portfolio": {
+      "get": {
+        "tags": ["Portfolio"],
+        "summary": "Get portfolio value",
+        "responses": {
+          "200": {
+            "description": "Portfolio value retrieved successfully"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/portfolio/advanced": {
+      "get": {
+        "tags": ["Portfolio"],
+        "summary": "Get advanced portfolio value",
+        "responses": {
+          "200": {
+            "description": "Advanced portfolio value retrieved successfully"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/prices": {
+      "get": {
+        "tags": ["Transactions"],
+        "summary": "View cryptocurrency prices",
+        "responses": {
+          "200": {
+            "description": "Prices retrieved successfully"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/transactions": {
+      "post": {
+        "tags": ["Transactions"],
+        "summary": "Add a new transaction",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TransactionRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Transaction added successfully"
+          },
+          "403": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Transactions"],
+        "summary": "View all transactions",
+        "responses": {
+          "200": {
+            "description": "Transactions retrieved successfully"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/transactions/update/{id}": {
+      "put": {
+        "tags": ["Transactions"],
+        "summary": "Update a transaction",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TransactionUpdateRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Transaction updated successfully"
+          },
+          "403": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/transactions/delete/{id}": {
+      "delete": {
+        "tags": ["Transactions"],
+        "summary": "Delete a transaction",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Transaction deleted successfully"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/transactions/delete/all": {
+      "delete": {
+        "tags": ["Transactions"],
+        "summary": "Delete all transactions",
+        "responses": {
+          "200": {
+            "description": "All transactions deleted successfully"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/session_data": {
+      "get": {
+        "tags": ["Session"],
+        "summary": "View session data",
+        "responses": {
+          "200": {
+            "description": "Session data retrieved successfully"
+          }
+        }
+      }
+    },
+    "/transactions/history": {
+      "post": {
+        "tags": ["Transactions"],
+        "summary": "Add historical portfolio data",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/HistoryRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Portfolio history added"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Transactions"],
+        "summary": "Get historical portfolio data",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "query",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "start_date",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date"
+          },
+          {
+            "name": "end_date",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Historical portfolio data retrieved"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "RegisterRequest": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "required": ["username", "password"]
+    },
+    "LoginRequest": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "required": ["username", "password"]
+    },
+    "TransactionRequest": {
+      "type": "object",
+      "properties": {
+        "user_id": {
+          "type": "integer"
+        },
+        "cryptocurrency": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "number"
+        },
+        "transaction_type": {
+          "type": "string",
+          "enum": ["buy", "sell"]
+        }
+      },
+      "required": ["user_id", "cryptocurrency", "amount", "transaction_type"]
+    },
+    "TransactionUpdateRequest": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "number"
+        },
+        "transaction_price": {
+          "type": "number"
+        }
+      }
+    },
+    "HistoryRequest": {
+      "type": "object",
+      "properties": {
+        "user_id": {
+          "type": "integer"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "value": {
+          "type": "number"
+        }
+      },
+      "required": ["user_id", "date", "value"]
+    }
+  }
+}
