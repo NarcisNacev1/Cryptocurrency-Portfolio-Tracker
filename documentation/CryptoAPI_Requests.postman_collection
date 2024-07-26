@@ -7,7 +7,7 @@
 	},
 	"item": [
 		{
-			"name": "POST",
+			"name": "Auth",
 			"item": [
 				{
 					"name": "http://127.0.0.1:5000/register",
@@ -84,88 +84,11 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "http://127.0.0.1:5000/transactions",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyMDcyMTg3NywianRpIjoiMWYyMWUyYTMtNjIyNS00ODI5LWExMDctOGE2MjRhZTdiZDQ0IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6eyJ1c2VybmFtZSI6Ik1hcmtvIn0sIm5iZiI6MTcyMDcyMTg3NywiY3NyZiI6IjM5M2FmNGU0LTc3OWUtNGE3ZC04ZDAxLTU1MTg0OGRmMDJhNiIsImV4cCI6MTcyMDcyMjc3N30.cnWbC3D2y_f0HBjf9lKZMXbFhH_8NGgZ2-B_-T2srlc",
-								"description": "JWT Authorization needed from Login/Registration\n",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"user_id\": \"2\",\r\n  \"cryptocurrency\": \"bitcoin\",\r\n  \"amount\": \"1\",\r\n  \"transaction_type\": \"buy\",\r\n  \"transaction_price\": \"555555\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://127.0.0.1:5000/transactions",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "5000",
-							"path": [
-								"transactions"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "http://127.0.0.1:5000/transactions/history",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyMDcyMjg5NywianRpIjoiNjY1NWRkYzUtYzFmZC00ZDEzLTkwZGItOTNmNTIxOWU3MDRmIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6eyJ1c2VybmFtZSI6Ik1hcmtvIn0sIm5iZiI6MTcyMDcyMjg5NywiY3NyZiI6IjBhNzc3ZDE4LTU0YTAtNDU5Ni1iZTQyLWE1YjhjZjNmYjE3ZSIsImV4cCI6MTcyMDcyMzc5N30.XWbFp3pcI1f1m3pLMjd2CxIPpHWPr7m8LDc_jrMW_9Y",
-								"description": "JWT Authorization needed from Login/Registration\n",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"user_id\": \"2\",\r\n  \"date\": \"2023-07-10\",\r\n  \"value\": \"3000\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://127.0.0.1:5000/transactions/history",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "5000",
-							"path": [
-								"transactions",
-								"history"
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		},
 		{
-			"name": "GET",
+			"name": "Transactions",
 			"item": [
 				{
 					"name": "http://127.0.0.1:5000/transactions",
@@ -292,6 +215,208 @@
 					"response": []
 				},
 				{
+					"name": "http://127.0.0.1:5000/transactions",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyMDcyMTg3NywianRpIjoiMWYyMWUyYTMtNjIyNS00ODI5LWExMDctOGE2MjRhZTdiZDQ0IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6eyJ1c2VybmFtZSI6Ik1hcmtvIn0sIm5iZiI6MTcyMDcyMTg3NywiY3NyZiI6IjM5M2FmNGU0LTc3OWUtNGE3ZC04ZDAxLTU1MTg0OGRmMDJhNiIsImV4cCI6MTcyMDcyMjc3N30.cnWbC3D2y_f0HBjf9lKZMXbFhH_8NGgZ2-B_-T2srlc",
+								"description": "JWT Authorization needed from Login/Registration\n",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"user_id\": \"2\",\r\n  \"cryptocurrency\": \"bitcoin\",\r\n  \"amount\": \"1\",\r\n  \"transaction_type\": \"buy\",\r\n  \"transaction_price\": \"555555\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/transactions",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"transactions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://127.0.0.1:5000/transactions/history",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyMDcyMjg5NywianRpIjoiNjY1NWRkYzUtYzFmZC00ZDEzLTkwZGItOTNmNTIxOWU3MDRmIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6eyJ1c2VybmFtZSI6Ik1hcmtvIn0sIm5iZiI6MTcyMDcyMjg5NywiY3NyZiI6IjBhNzc3ZDE4LTU0YTAtNDU5Ni1iZTQyLWE1YjhjZjNmYjE3ZSIsImV4cCI6MTcyMDcyMzc5N30.XWbFp3pcI1f1m3pLMjd2CxIPpHWPr7m8LDc_jrMW_9Y",
+								"description": "JWT Authorization needed from Login/Registration\n",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"user_id\": \"2\",\r\n  \"date\": \"2023-07-10\",\r\n  \"value\": \"3000\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/transactions/history",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"transactions",
+								"history"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://127.0.0.1:5000/transactions/delete/all",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyMDcyMTg3NywianRpIjoiMWYyMWUyYTMtNjIyNS00ODI5LWExMDctOGE2MjRhZTdiZDQ0IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6eyJ1c2VybmFtZSI6Ik1hcmtvIn0sIm5iZiI6MTcyMDcyMTg3NywiY3NyZiI6IjM5M2FmNGU0LTc3OWUtNGE3ZC04ZDAxLTU1MTg0OGRmMDJhNiIsImV4cCI6MTcyMDcyMjc3N30.cnWbC3D2y_f0HBjf9lKZMXbFhH_8NGgZ2-B_-T2srlc",
+								"description": "JWT Authorization needed from Login/Registration\n",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"user_id\": \"2\",\r\n  \"cryptocurrency\": \"bitcoin\",\r\n  \"amount\": \"3\",\r\n  \"transaction_type\": \"buy\",\r\n  \"transaction_price\": \"555555\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/transactions/delete/all",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"transactions",
+								"delete",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://127.0.0.1:5000/transactions/delete/1",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyMDcyMTg3NywianRpIjoiMWYyMWUyYTMtNjIyNS00ODI5LWExMDctOGE2MjRhZTdiZDQ0IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6eyJ1c2VybmFtZSI6Ik1hcmtvIn0sIm5iZiI6MTcyMDcyMTg3NywiY3NyZiI6IjM5M2FmNGU0LTc3OWUtNGE3ZC04ZDAxLTU1MTg0OGRmMDJhNiIsImV4cCI6MTcyMDcyMjc3N30.cnWbC3D2y_f0HBjf9lKZMXbFhH_8NGgZ2-B_-T2srlc",
+								"description": "JWT Authorization needed from Login/Registration\n",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"user_id\": \"2\",\r\n  \"cryptocurrency\": \"bitcoin\",\r\n  \"amount\": \"2\",\r\n  \"transaction_type\": \"buy\",\r\n  \"transaction_price\": \"555555\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/transactions/delete/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"transactions",
+								"delete",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://127.0.0.1:5000/transactions/update/2",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyMDcyMTg3NywianRpIjoiMWYyMWUyYTMtNjIyNS00ODI5LWExMDctOGE2MjRhZTdiZDQ0IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6eyJ1c2VybmFtZSI6Ik1hcmtvIn0sIm5iZiI6MTcyMDcyMTg3NywiY3NyZiI6IjM5M2FmNGU0LTc3OWUtNGE3ZC04ZDAxLTU1MTg0OGRmMDJhNiIsImV4cCI6MTcyMDcyMjc3N30.cnWbC3D2y_f0HBjf9lKZMXbFhH_8NGgZ2-B_-T2srlc",
+								"description": "JWT Authorization needed from Login/Registration\n",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"user_id\": \"2\",\r\n  \"cryptocurrency\": \"bitcoin\",\r\n  \"amount\": \"3\",\r\n  \"transaction_type\": \"buy\",\r\n  \"transaction_price\": \"555555\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/transactions/update/2",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"transactions",
+								"update",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Portfolio",
+			"item": [
+				{
 					"name": "http://127.0.0.1:5000/portfolio",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -377,31 +502,22 @@
 			]
 		},
 		{
-			"name": "DELETE",
+			"name": "Prices",
 			"item": [
 				{
-					"name": "http://127.0.0.1:5000/transactions/delete/1",
+					"name": "http://127.0.0.1:5000/prices",
 					"request": {
-						"method": "DELETE",
+						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyMDcyMTg3NywianRpIjoiMWYyMWUyYTMtNjIyNS00ODI5LWExMDctOGE2MjRhZTdiZDQ0IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6eyJ1c2VybmFtZSI6Ik1hcmtvIn0sIm5iZiI6MTcyMDcyMTg3NywiY3NyZiI6IjM5M2FmNGU0LTc3OWUtNGE3ZC04ZDAxLTU1MTg0OGRmMDJhNiIsImV4cCI6MTcyMDcyMjc3N30.cnWbC3D2y_f0HBjf9lKZMXbFhH_8NGgZ2-B_-T2srlc",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyMTg1ODc4NSwianRpIjoiNjE3M2RjNDItMTA0Ny00MWMyLWJjZjYtMWM2ODYwMzg4ZTdiIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6eyJ1c2VybmFtZSI6Ik1hcmtvIn0sIm5iZiI6MTcyMTg1ODc4NSwiY3NyZiI6IjNmOTM4NDQwLTNiMzEtNDgwZS05ZDE0LWFlMjY4NDEzMjk3NCIsImV4cCI6MTcyMTg1OTY4NX0.yt7XBOfy9jlYpwZj90fz8n0IkTGvlFK8Qpwea5PlyCQ",
 								"description": "JWT Authorization needed from Login/Registration\n",
 								"type": "text"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"user_id\": \"2\",\r\n  \"cryptocurrency\": \"bitcoin\",\r\n  \"amount\": \"2\",\r\n  \"transaction_type\": \"buy\",\r\n  \"transaction_price\": \"555555\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "http://127.0.0.1:5000/transactions/delete/1",
+							"raw": "http://127.0.0.1:5000/prices",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -411,94 +527,7 @@
 							],
 							"port": "5000",
 							"path": [
-								"transactions",
-								"delete",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "http://127.0.0.1:5000/transactions/delete/all",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyMDcyMTg3NywianRpIjoiMWYyMWUyYTMtNjIyNS00ODI5LWExMDctOGE2MjRhZTdiZDQ0IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6eyJ1c2VybmFtZSI6Ik1hcmtvIn0sIm5iZiI6MTcyMDcyMTg3NywiY3NyZiI6IjM5M2FmNGU0LTc3OWUtNGE3ZC04ZDAxLTU1MTg0OGRmMDJhNiIsImV4cCI6MTcyMDcyMjc3N30.cnWbC3D2y_f0HBjf9lKZMXbFhH_8NGgZ2-B_-T2srlc",
-								"description": "JWT Authorization needed from Login/Registration\n",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"user_id\": \"2\",\r\n  \"cryptocurrency\": \"bitcoin\",\r\n  \"amount\": \"3\",\r\n  \"transaction_type\": \"buy\",\r\n  \"transaction_price\": \"555555\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://127.0.0.1:5000/transactions/delete/all",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "5000",
-							"path": [
-								"transactions",
-								"delete",
-								"all"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "PUT",
-			"item": [
-				{
-					"name": "http://127.0.0.1:5000/transactions/update/2",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyMDcyMTg3NywianRpIjoiMWYyMWUyYTMtNjIyNS00ODI5LWExMDctOGE2MjRhZTdiZDQ0IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6eyJ1c2VybmFtZSI6Ik1hcmtvIn0sIm5iZiI6MTcyMDcyMTg3NywiY3NyZiI6IjM5M2FmNGU0LTc3OWUtNGE3ZC04ZDAxLTU1MTg0OGRmMDJhNiIsImV4cCI6MTcyMDcyMjc3N30.cnWbC3D2y_f0HBjf9lKZMXbFhH_8NGgZ2-B_-T2srlc",
-								"description": "JWT Authorization needed from Login/Registration\n",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"user_id\": \"2\",\r\n  \"cryptocurrency\": \"bitcoin\",\r\n  \"amount\": \"3\",\r\n  \"transaction_type\": \"buy\",\r\n  \"transaction_price\": \"555555\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://127.0.0.1:5000/transactions/update/2",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "5000",
-							"path": [
-								"transactions",
-								"update",
-								"2"
+								"prices"
 							]
 						}
 					},

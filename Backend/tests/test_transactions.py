@@ -140,3 +140,25 @@ def test_login_user(test_client, init_database):
                                 content_type='application/json')
 
     assert response.status_code == 200
+
+
+CRYPTOCURRENCIES = ["bitcoin", "ethereum", "litecoin", "ripple", "dogecoin", "cardano", "polkadot", "solana", "chainlink", "uniswap"]
+
+
+def test_get_prices(test_client, init_databased):
+
+    jwt_token = get_jwt_token(test_client)
+
+    headers = {
+        'Authorization': f'Bearer {jwt_token}'
+
+    }
+    response = test_client.get('/prices', headers=headers)
+    assert response.status_code == 200
+    data = response.get_json()
+    assert 'prices' in data
+    assert 'message' in data
+    assert data['message'] == 'Current prices of top 10 cryptocurrencies in USD'
+    assert isinstance(data['prices'], dict)
+    for crypto in CRYPTOCURRENCIES:
+        assert crypto in data['prices']
