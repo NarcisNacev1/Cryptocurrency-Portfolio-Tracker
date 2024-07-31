@@ -1,15 +1,31 @@
 from flask import Blueprint, jsonify
-from Backend.src.models import Transaction
+from Backend.src.models import Transaction, User
 from Backend.src.services.crypto import get_crypto_prices
 from decimal import Decimal
-
+from flask_jwt_extended import get_jwt_identity, jwt_required
+from flask import request
 
 portfolio_routes = Blueprint('portfolio', __name__)
 
-
 @portfolio_routes.route('/portfolio', methods=['GET'])
+@jwt_required()
 def get_portfolio_value():
     try:
+        #For Individual Prices Of the Cryptos it goes fetches the username of the user then querys the table then takes the id of the user and then gets the transactopons for it
+        current_user = get_jwt_identity()
+        current_username = current_user['username']
+
+        user = User.query.filter_by(username=current_username).first()
+        if not user:
+            return jsonify({'msg': 'User not found'}), 404
+
+        current_user_id = user.id
+
+        transactions = Transaction.query.filter_by(user_id=current_user_id).all()
+
+        cryptos = [transaction.as_dict() for transaction in transactions]
+
+        #for total value
         transactions = Transaction.query.all()
         portfolio = {}
         for transaction in transactions:
@@ -31,7 +47,7 @@ def get_portfolio_value():
             except Exception as e:
                 return jsonify({'error': str(e)}), 500
 
-        return jsonify({'total_value': str(total_value) + ' $ '})
+        return jsonify({'Indevidual_Cryptos': cryptos ,'Total_Value': str(total_value) + ' $ '})
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 

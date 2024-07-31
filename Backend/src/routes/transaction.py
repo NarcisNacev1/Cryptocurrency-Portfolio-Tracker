@@ -12,7 +12,8 @@ import logging
 transaction_routes = Blueprint('transactions', __name__)
 logger = logging.getLogger(__name__)
 
-CRYPTOCURRENCIES = ["bitcoin",
+CRYPTOCURRENCIES = [
+    "bitcoin",
     "ethereum",
     "litecoin",
     "ripple",
@@ -21,7 +22,17 @@ CRYPTOCURRENCIES = ["bitcoin",
     "polkadot",
     "solana",
     "chainlink",
-    "uniswap"
+    "uniswap",
+    "binancecoin",
+    "stellar",
+    "vechain",
+    "tron",
+    "monero",
+    "dash",
+    "tezos",
+    "aave",
+    "cosmos",
+    "avalanche-3"
 ]
 
 
@@ -32,11 +43,25 @@ def view_prices():
        prices = get_cryptos(CRYPTOCURRENCIES)
        response = {
            "message": 'Current prices of top 10 cryptocurrencies in USD',
-           "prices": prices
+           "price": prices
        }
-       return jsonify(response) , 200
+       return jsonify(response), 200
    except Exception as e:
        return jsonify({'error:': str(e)}), 500
+
+
+@transaction_routes.route('/price/<string:crypto>', methods=['GET'])
+@jwt_required()
+def view_price(crypto):
+    try:
+        price = get_crypto_prices(crypto)
+        response = {
+            "message": f"The current price of {crypto} in USD is : ",
+            "prices": f'{price} USD'
+        }
+        return jsonify(response), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 
 @transaction_routes.route('/transactions', methods=["POST"])
