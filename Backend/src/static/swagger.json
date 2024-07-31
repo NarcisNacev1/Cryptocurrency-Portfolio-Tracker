@@ -54,7 +54,15 @@
         ],
         "responses": {
           "200": {
-            "description": "Login successful"
+            "description": "Login successful",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "access_token": {
+                  "type": "string"
+                }
+              }
+            }
           },
           "401": {
             "description": "Invalid credentials"
@@ -69,6 +77,11 @@
       "get": {
         "tags": ["Portfolio"],
         "summary": "Get portfolio value",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Portfolio value retrieved successfully"
@@ -83,6 +96,11 @@
       "get": {
         "tags": ["Portfolio"],
         "summary": "Get advanced portfolio value",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Advanced portfolio value retrieved successfully"
@@ -97,6 +115,11 @@
       "get": {
         "tags": ["Transactions"],
         "summary": "View cryptocurrency prices",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Prices retrieved successfully"
@@ -121,6 +144,11 @@
             }
           }
         ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "responses": {
           "201": {
             "description": "Transaction added successfully"
@@ -136,6 +164,11 @@
       "get": {
         "tags": ["Transactions"],
         "summary": "View all transactions",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Transactions retrieved successfully"
@@ -166,6 +199,11 @@
             }
           }
         ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Transaction updated successfully"
@@ -191,6 +229,11 @@
             "type": "integer"
           }
         ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Transaction deleted successfully"
@@ -205,6 +248,11 @@
       "delete": {
         "tags": ["Transactions"],
         "summary": "Delete all transactions",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "All transactions deleted successfully"
@@ -219,6 +267,11 @@
       "get": {
         "tags": ["Session"],
         "summary": "View session data",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Session data retrieved successfully"
@@ -238,6 +291,11 @@
             "schema": {
               "$ref": "#/definitions/HistoryRequest"
             }
+          }
+        ],
+        "security": [
+          {
+            "BearerAuth": []
           }
         ],
         "responses": {
@@ -272,6 +330,11 @@
             "required": false,
             "type": "string",
             "format": "date"
+          }
+        ],
+        "security": [
+          {
+            "BearerAuth": []
           }
         ],
         "responses": {
@@ -356,5 +419,18 @@
       },
       "required": ["user_id", "date", "value"]
     }
-  }
+  },
+  "securityDefinitions": {
+    "BearerAuth": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "Enter your JWT token in the format **Bearer &lt;token&gt;**"
+    }
+  },
+  "security": [
+    {
+      "BearerAuth": []
+    }
+  ]
 }
