@@ -170,42 +170,51 @@ def view_session():
     return jsonify(session_data), 200
 
 
-@transaction_routes.route('/transactions/history', methods=['POST'])
-@jwt_required()
-def add_historical_data():
-    try:
-        data = request.get_json()
-        user_id = data.get('user_id')
-        date = data.get('date')
-        value = data.get('value')
-
-        history = PortfolioHistory(user_id=user_id, date=date, value=value)
-        db.session.add(history)
-        db.session.commit()
-        return jsonify({'message': 'Portfolio history added'}), 201
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({'error': str(e)}), 500
-
-
 @transaction_routes.route('/transactions/history', methods=['GET'])
 @jwt_required()
 def get_historical_data():
     try:
-        user_id = request.args.get('user_id')
+        current_user = get_jwt_identity()
+        username = current_user['username']
+
+        user = User.query.filter_by(username=username).first()
+        if not user:
+            return jsonify({'error': 'User not found'}), 404
+
+        user_id = user.id
         start_date = request.args.get('start_date')
         end_date = request.args.get('end_date')
 
-        query = PortfolioHistory.query
-        if user_id:
-            query = query.filter(PortfolioHistory.user_id == user_id)
+        query = Transaction.query.filter(Transaction.user_id == user_id)
         if start_date:
-            query = query.filter(PortfolioHistory.date >= start_date)
+            query = query.filter(Transaction.transaction_date >= start_date)
         if end_date:
-            query = query.filter(PortfolioHistory.date <= end_date)
+            query = query.filter(Transaction.transaction_date <= end_date)
 
         transactions = query.all()
-        history_data = [transaction.as_dict() for transaction in transactions]
+
+        total_value = 0
+        total_gain_loss = 0
+        crypto_holdings = {}
+
+        for transaction in transactions:
+            crypto = transaction.cryptocurrency
+            if crypto not in crypto_holdings:
+                crypto_holdings[crypto] = 0
+
+            if transaction.transaction_type == 'buy':
+                crypto_holdings[crypto] += transaction.amount
+                total_value += transaction.amount * transaction.transaction_price
+            elif transaction.transaction_type == 'sell':
+                crypto_holdings[crypto] -= transaction.amount
+                total_value -= transaction.amount * transaction.transaction_price
+                total_gain_loss += transaction.amount * transaction.transaction_price
+
+        history_data = {
+            'total_value': f'{total_value} $',
+            'total_gain_loss': f'{total_gain_loss}  $',
+            'crypto_holdings': crypto_holdings
+        }
 
         return jsonify(history_data), 200
     except Exception as e:

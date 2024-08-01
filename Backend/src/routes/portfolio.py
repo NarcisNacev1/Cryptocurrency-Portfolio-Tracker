@@ -20,13 +20,10 @@ def get_portfolio_value():
             return jsonify({'msg': 'User not found'}), 404
 
         current_user_id = user.id
-
         transactions = Transaction.query.filter_by(user_id=current_user_id).all()
-
         cryptos = [transaction.as_dict() for transaction in transactions]
 
         #for total value
-        transactions = Transaction.query.all()
         portfolio = {}
         for transaction in transactions:
             crypto = transaction.cryptocurrency
@@ -53,9 +50,17 @@ def get_portfolio_value():
 
 
 @portfolio_routes.route('/portfolio/advanced', methods=['GET'])
+@jwt_required()
 def get_advanced_portfolio_value():
     try:
-        transactions = Transaction.query.yield_per(100)
+        current_user = get_jwt_identity()
+        current_username = current_user['username']
+
+        user = User.query.filter_by(username=current_username).first()
+        if not user:
+            return jsonify({'error': 'User not found'}), 404
+
+        transactions = Transaction.query.filter_by(user_id=user.id).yield_per(100)
         portfolio = {}
         for transaction in transactions:
             crypto = transaction.cryptocurrency
