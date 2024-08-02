@@ -32,6 +32,8 @@
        "password": "555555"
      }
      ```
+     - This request now returns the ID of the newly registered user.
+
    - Log in: `POST http://127.0.0.1:5000/login`
      ```json
      {
@@ -47,25 +49,18 @@
        "user_id": "2",
        "cryptocurrency": "dogecoin",
        "amount": "1",
-       "transaction_type": "buy",
-       "transaction_price": "55"
+       "transaction_type": "buy"
      }
      ```
+     - The `transaction_price` field has been removed as prices are now fetched in real time.
 
    - View transactions: `GET http://127.0.0.1:5000/transactions`
 
-   - Post portfolio value: `POST http://127.0.0.1:5000/transactions/history`
-     ```json
-     {
-       "user_id": "2",
-       "date": "2023-07-10",
-       "value": "3000"
-     }
-     ```
-
    - View portfolio value: `GET http://127.0.0.1:5000/portfolio`
+     - Returns the cryptocurrencies owned and the total value of the portfolio.
 
    - Advanced portfolio view: `GET http://127.0.0.1:5000/portfolio/advanced`
+     - Expanded to include cryptocurrencies owned and the total value of the portfolio.
 
    - Delete a transaction: `DELETE http://127.0.0.1:5000/transactions/delete/<id>`
 
@@ -82,8 +77,30 @@
      ```
 
    - View last transaction: `GET http://127.0.0.1:5000/session_data`
+     ```json
+     {
+       "last_transaction": {
+         "amount": 2,
+         "cryptocurrency": "bitcoin",
+         "transaction_type": "sell",
+         "user_id": 4
+       }
+     }
+     ```
 
    - View top 10 cryptocurrency prices: `GET http://127.0.0.1:5000/prices`
+
+   - View price of a specified cryptocurrency: `GET http://127.0.0.1:5000/prices/<crypto>`
+     - New route to get the price of a specific cryptocurrency.
+
+   - View historical transaction data: `GET http://127.0.0.1:5000/transactions/history`
+     ```json
+     {
+       "start_date": "2023-01-01",
+       "end_date": "2023-12-31"
+     }
+     ```
+     - New route to get historical transaction data. Filters by start and end dates and returns total value, total gain/loss, and cryptocurrency holdings.
 
 4. **Database Configuration:**
    - Configure PostgreSQL database in `config.py`:
@@ -98,7 +115,7 @@
      ```
 
 5. **API Documentation:**
-   - Swagger UI documentation is available for API endpoints.
+   - Swagger UI documentation is updated to include authorization.
 
 6. **PostgreSQL Documentation:**
    - Prepopulated PostgreSQL documentation is available in the `documentation` folder.
@@ -106,8 +123,12 @@
 ## Updated Features
 1. Renamed Postman documentation to be more readable and accessible.
 2. Fixed issue with users being able to make transactions with other users' IDs.
-3. Added API documentation using Swagger UI.
-4. Added a `/prices` route that provides the top 10 prices of cryptocurrencies.
-5. Unhardcoded cryptocurrency prices and implemented real-time fetching of prices from the CoinGecko API.
+3. Added API documentation using Swagger UI with authorization.
+4. Added a `/prices/<crypto>` route that provides the price of a specified cryptocurrency.
+5. Expanded `/portfolio` and `/portfolio/advanced` routes to return owned cryptocurrencies and the total portfolio value.
+6. Fixed issues with viewing other people's portfolios and transactions.
+7. Added real-time portfolio value checking based on cryptocurrency prices.
+8. Reinvented the transaction history to include gain and loss information.
+9. Removed the `/transactions/history` POST route and added a `/transactions/history` GET route for retrieving historical transaction data.
 
 For further assistance, refer to the documentation folder or open an issue on GitHub.
