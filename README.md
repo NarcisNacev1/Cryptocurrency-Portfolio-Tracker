@@ -130,5 +130,6 @@
 7. Added real-time portfolio value checking based on cryptocurrency prices.
 8. Reinvented the transaction history to include gain and loss information.
 9. Removed the `/transactions/history` POST route and added a `/transactions/history` GET route for retrieving historical transaction data.
+10. Added Example Responses to API Documentation: Included example responses in the API documentation.
 
 For further assistance, refer to the documentation folder or open an issue on GitHub.
