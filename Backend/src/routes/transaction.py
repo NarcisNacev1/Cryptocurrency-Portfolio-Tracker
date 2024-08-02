@@ -104,9 +104,17 @@ def add_transaction():
 @transaction_routes.route('/transactions', methods=["GET"])
 @jwt_required()
 def view_transactions():
-    transactions = Transaction.query.all()
-    return jsonify([transaction.as_dict() for transaction in transactions])
+    current_user = get_jwt_identity()
+    current_username = current_user['username']
 
+    user = User.query.filter_by(username=current_username).first()
+    if not user:
+        return jsonify({'msg': 'User not found'}), 404
+
+    user_id = user.id
+
+    transactions = Transaction.query.filter_by(user_id=user_id).all()
+    return jsonify([transaction.as_dict() for transaction in transactions]), 200
 
 @transaction_routes.route('/transactions/update/<int:id>', methods=["PUT"])
 @jwt_required()
@@ -153,7 +161,16 @@ def delete_transaction(id):
 @jwt_required()
 def delete_all_transactions():
     try:
-        transactions = Transaction.query.all()
+        current_user = get_jwt_identity()
+        current_username = current_user['username']
+
+        user = User.query.filter_by(username=current_username).first()
+        if not user:
+            return jsonify({'msg': 'User not found'}), 404
+
+        user_id = user.id
+
+        transactions = Transaction.query.filter_by(user_id=user_id).all()
         for transaction in transactions:
             db.session.delete(transaction)
         db.session.commit()
