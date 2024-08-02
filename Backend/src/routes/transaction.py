@@ -2,7 +2,6 @@ from flask import Blueprint, request, jsonify, session
 from Backend.src.models import Transaction
 from Backend.src.extensions import db
 from flask_jwt_extended import jwt_required
-from Backend.src.models import PortfolioHistory
 from Backend.src.services.crypto import get_crypto_prices
 from Backend.src.services.crypto import get_cryptos
 from flask_jwt_extended import get_jwt_identity

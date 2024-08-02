@@ -202,6 +202,56 @@
         }
       }
     },
+    "/price/{crypto}": {
+      "get": {
+        "tags": ["Transactions"],
+        "summary": "View the price of a specific cryptocurrency",
+        "parameters": [
+          {
+            "name": "crypto",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The cryptocurrency to view the price of"
+          }
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The current price of the specified cryptocurrency in USD",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "prices": {
+                  "type": "string"
+                }
+              }
+            },
+            "examples": {
+              "application/json": {
+                "message": "The current price of bitcoin in USD is : ",
+                "prices": "34000 USD"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "examples": {
+              "application/json": {
+                "error": "Internal server error"
+              }
+            }
+          }
+        }
+      }
+    },
     "/transactions": {
       "post": {
         "tags": ["Transactions"],
