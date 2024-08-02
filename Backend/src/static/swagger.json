@@ -27,13 +27,28 @@
         ],
         "responses": {
           "201": {
-            "description": "User registered successfully"
+            "description": "User registered successfully",
+            "examples": {
+              "application/json": {
+                "message": "User registered successfully"
+              }
+            }
           },
           "400": {
-            "description": "Invalid input"
+            "description": "Invalid input",
+            "examples": {
+              "application/json": {
+                "error": "Invalid input"
+              }
+            }
           },
           "500": {
-            "description": "Internal server error"
+            "description": "Internal server error",
+            "examples": {
+              "application/json": {
+                "error": "Internal server error"
+              }
+            }
           }
         }
       }
@@ -62,13 +77,28 @@
                   "type": "string"
                 }
               }
+            },
+            "examples": {
+              "application/json": {
+                "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+              }
             }
           },
           "401": {
-            "description": "Invalid credentials"
+            "description": "Invalid credentials",
+            "examples": {
+              "application/json": {
+                "error": "Invalid credentials"
+              }
+            }
           },
           "500": {
-            "description": "Internal server error"
+            "description": "Internal server error",
+            "examples": {
+              "application/json": {
+                "error": "Internal server error"
+              }
+            }
           }
         }
       }
@@ -84,10 +114,20 @@
         ],
         "responses": {
           "200": {
-            "description": "Portfolio value retrieved successfully"
+            "description": "Portfolio value retrieved successfully",
+            "examples": {
+              "application/json": {
+                "portfolio_value": "15000 $"
+              }
+            }
           },
           "500": {
-            "description": "Internal server error"
+            "description": "Internal server error",
+            "examples": {
+              "application/json": {
+                "error": "Internal server error"
+              }
+            }
           }
         }
       }
@@ -103,10 +143,30 @@
         ],
         "responses": {
           "200": {
-            "description": "Advanced portfolio value retrieved successfully"
+            "description": "Advanced portfolio value retrieved successfully",
+            "examples": {
+              "application/json": {
+                "portfolio_value": "15000 $",
+                "details": {
+                  "bitcoin": {
+                    "amount": 1.5,
+                    "value": "7500 $"
+                  },
+                  "ethereum": {
+                    "amount": 10,
+                    "value": "5000 $"
+                  }
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal server error"
+            "description": "Internal server error",
+            "examples": {
+              "application/json": {
+                "error": "Internal server error"
+              }
+            }
           }
         }
       }
@@ -122,10 +182,22 @@
         ],
         "responses": {
           "200": {
-            "description": "Prices retrieved successfully"
+            "description": "Prices retrieved successfully",
+            "examples": {
+              "application/json": {
+                "bitcoin": "34000 $",
+                "ethereum": "2000 $",
+                "litecoin": "150 $"
+              }
+            }
           },
           "500": {
-            "description": "Internal server error"
+            "description": "Internal server error",
+            "examples": {
+              "application/json": {
+                "error": "Internal server error"
+              }
+            }
           }
         }
       }
@@ -151,13 +223,28 @@
         ],
         "responses": {
           "201": {
-            "description": "Transaction added successfully"
+            "description": "Transaction added successfully",
+            "examples": {
+              "application/json": {
+                "message": "Transaction added successfully"
+              }
+            }
           },
           "403": {
-            "description": "Unauthorized"
+            "description": "Unauthorized",
+            "examples": {
+              "application/json": {
+                "error": "Unauthorized"
+              }
+            }
           },
           "500": {
-            "description": "Internal server error"
+            "description": "Internal server error",
+            "examples": {
+              "application/json": {
+                "error": "Internal server error"
+              }
+            }
           }
         }
       },
@@ -171,10 +258,33 @@
         ],
         "responses": {
           "200": {
-            "description": "Transactions retrieved successfully"
+            "description": "Transactions retrieved successfully",
+            "examples": {
+              "application/json": [
+                {
+                  "id": 1,
+                  "user_id": 1,
+                  "cryptocurrency": "bitcoin",
+                  "amount": 0.5,
+                  "transaction_type": "buy"
+                },
+                {
+                  "id": 2,
+                  "user_id": 1,
+                  "cryptocurrency": "ethereum",
+                  "amount": 5,
+                  "transaction_type": "buy"
+                }
+              ]
+            }
           },
           "500": {
-            "description": "Internal server error"
+            "description": "Internal server error",
+            "examples": {
+              "application/json": {
+                "error": "Internal server error"
+              }
+            }
           }
         }
       }
@@ -206,13 +316,28 @@
         ],
         "responses": {
           "200": {
-            "description": "Transaction updated successfully"
+            "description": "Transaction updated successfully",
+            "examples": {
+              "application/json": {
+                "message": "Transaction updated successfully"
+              }
+            }
           },
           "403": {
-            "description": "Unauthorized"
+            "description": "Unauthorized",
+            "examples": {
+              "application/json": {
+                "error": "Unauthorized"
+              }
+            }
           },
           "500": {
-            "description": "Internal server error"
+            "description": "Internal server error",
+            "examples": {
+              "application/json": {
+                "error": "Internal server error"
+              }
+            }
           }
         }
       }
@@ -236,10 +361,20 @@
         ],
         "responses": {
           "200": {
-            "description": "Transaction deleted successfully"
+            "description": "Transaction deleted successfully",
+            "examples": {
+              "application/json": {
+                "message": "Transaction deleted successfully"
+              }
+            }
           },
           "500": {
-            "description": "Internal server error"
+            "description": "Internal server error",
+            "examples": {
+              "application/json": {
+                "error": "Internal server error"
+              }
+            }
           }
         }
       }
@@ -255,10 +390,20 @@
         ],
         "responses": {
           "200": {
-            "description": "All transactions deleted successfully"
+            "description": "All transactions deleted successfully",
+            "examples": {
+              "application/json": {
+                "message": "All transactions deleted successfully"
+              }
+            }
           },
           "500": {
-            "description": "Internal server error"
+            "description": "Internal server error",
+            "examples": {
+              "application/json": {
+                "error": "Internal server error"
+              }
+            }
           }
         }
       }
@@ -274,62 +419,46 @@
         ],
         "responses": {
           "200": {
-            "description": "Session data retrieved successfully"
+            "description": "Session data retrieved successfully",
+            "examples": {
+              "application/json": {
+                "last_transaction": {
+                  "cryptocurrency": "bitcoin",
+                  "amount": 0.5,
+                  "transaction_type": "buy"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "examples": {
+              "application/json": {
+                "error": "Internal server error"
+              }
+            }
           }
         }
       }
     },
     "/transactions/history": {
-      "post": {
-        "tags": ["Transactions"],
-        "summary": "Add historical portfolio data",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/HistoryRequest"
-            }
-          }
-        ],
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Portfolio history added"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      },
       "get": {
         "tags": ["Transactions"],
-        "summary": "Get historical portfolio data",
+        "summary": "View transaction history",
         "parameters": [
-          {
-            "name": "user_id",
-            "in": "query",
-            "required": false,
-            "type": "integer"
-          },
           {
             "name": "start_date",
             "in": "query",
-            "required": false,
             "type": "string",
-            "format": "date"
+            "format": "date",
+            "required": false
           },
           {
             "name": "end_date",
             "in": "query",
-            "required": false,
             "type": "string",
-            "format": "date"
+            "format": "date",
+            "required": false
           }
         ],
         "security": [
@@ -339,10 +468,25 @@
         ],
         "responses": {
           "200": {
-            "description": "Historical portfolio data retrieved"
+            "description": "Transaction history retrieved successfully",
+            "examples": {
+              "application/json": {
+                "total_value": "15000 $",
+                "total_gain_loss": "2000 $",
+                "crypto_holdings": {
+                  "bitcoin": 0.5,
+                  "ethereum": 5
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal server error"
+            "description": "Internal server error",
+            "examples": {
+              "application/json": {
+                "error": "Internal server error"
+              }
+            }
           }
         }
       }
@@ -402,22 +546,6 @@
           "type": "number"
         }
       }
-    },
-    "HistoryRequest": {
-      "type": "object",
-      "properties": {
-        "user_id": {
-          "type": "integer"
-        },
-        "date": {
-          "type": "string",
-          "format": "date"
-        },
-        "value": {
-          "type": "number"
-        }
-      },
-      "required": ["user_id", "date", "value"]
     }
   },
   "securityDefinitions": {
@@ -425,7 +553,7 @@
       "type": "apiKey",
       "name": "Authorization",
       "in": "header",
-      "description": "Enter your JWT token in the format **Bearer &lt;token&gt;**"
+      "description": "Enter your JWT token in the format **Bearer <token>**"
     }
   },
   "security": [
