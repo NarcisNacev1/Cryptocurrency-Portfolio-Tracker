@@ -88,7 +88,7 @@
      }
      ```
 
-   - View top 10 cryptocurrency prices: `GET http://127.0.0.1:5000/prices`
+   - View top 20 cryptocurrency prices: `GET http://127.0.0.1:5000/prices`
 
    - View price of a specified cryptocurrency: `GET http://127.0.0.1:5000/prices/<crypto>`
      - New route to get the price of a specific cryptocurrency.
