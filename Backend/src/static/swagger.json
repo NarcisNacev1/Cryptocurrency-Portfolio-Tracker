@@ -300,7 +300,22 @@
       },
       "get": {
         "tags": ["Transactions"],
-        "summary": "View all transactions",
+        "summary": "View all transactions with optional filtering",
+        "parameters": [
+          {
+            "name": "cryptocurrency",
+            "in": "query",
+            "type": "string",
+            "description": "Filter by cryptocurrency"
+          },
+          {
+            "name": "transaction_type",
+            "in": "query",
+            "type": "string",
+            "enum": ["buy", "sell"],
+            "description": "Filter by transaction type"
+          }
+        ],
         "security": [
           {
             "BearerAuth": []
@@ -316,14 +331,18 @@
                   "user_id": 1,
                   "cryptocurrency": "bitcoin",
                   "amount": 0.5,
-                  "transaction_type": "buy"
+                  "transaction_type": "buy",
+                  "transaction_price": 30000,
+                  "transaction_date": "2023-08-01T12:00:00"
                 },
                 {
                   "id": 2,
                   "user_id": 1,
                   "cryptocurrency": "ethereum",
                   "amount": 5,
-                  "transaction_type": "buy"
+                  "transaction_type": "buy",
+                  "transaction_price": 2000,
+                  "transaction_date": "2023-08-01T12:00:00"
                 }
               ]
             }
@@ -418,6 +437,14 @@
               }
             }
           },
+          "403": {
+            "description": "Unauthorized",
+            "examples": {
+              "application/json": {
+                "error": "Unauthorized"
+              }
+            }
+          },
           "500": {
             "description": "Internal server error",
             "examples": {
@@ -447,6 +474,14 @@
               }
             }
           },
+          "403": {
+            "description": "Unauthorized",
+            "examples": {
+              "application/json": {
+                "error": "Unauthorized"
+              }
+            }
+          },
           "500": {
             "description": "Internal server error",
             "examples": {
@@ -458,7 +493,7 @@
         }
       }
     },
-    "/session_data": {
+    "/session/data": {
       "get": {
         "tags": ["Session"],
         "summary": "View session data",
@@ -472,60 +507,10 @@
             "description": "Session data retrieved successfully",
             "examples": {
               "application/json": {
-                "last_transaction": {
-                  "cryptocurrency": "bitcoin",
-                  "amount": 0.5,
-                  "transaction_type": "buy"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal server error",
-            "examples": {
-              "application/json": {
-                "error": "Internal server error"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/transactions/history": {
-      "get": {
-        "tags": ["Transactions"],
-        "summary": "View transaction history",
-        "parameters": [
-          {
-            "name": "start_date",
-            "in": "query",
-            "type": "string",
-            "format": "date",
-            "required": false
-          },
-          {
-            "name": "end_date",
-            "in": "query",
-            "type": "string",
-            "format": "date",
-            "required": false
-          }
-        ],
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Transaction history retrieved successfully",
-            "examples": {
-              "application/json": {
-                "total_value": "15000 $",
-                "total_gain_loss": "2000 $",
-                "crypto_holdings": {
-                  "bitcoin": 0.5,
-                  "ethereum": 5
+                "session_id": "abc123",
+                "data": {
+                  "user_id": 1,
+                  "username": "testuser"
                 }
               }
             }
@@ -552,8 +537,7 @@
         "password": {
           "type": "string"
         }
-      },
-      "required": ["username", "password"]
+      }
     },
     "LoginRequest": {
       "type": "object",
@@ -564,15 +548,11 @@
         "password": {
           "type": "string"
         }
-      },
-      "required": ["username", "password"]
+      }
     },
     "TransactionRequest": {
       "type": "object",
       "properties": {
-        "user_id": {
-          "type": "integer"
-        },
         "cryptocurrency": {
           "type": "string"
         },
@@ -583,17 +563,20 @@
           "type": "string",
           "enum": ["buy", "sell"]
         }
-      },
-      "required": ["user_id", "cryptocurrency", "amount", "transaction_type"]
+      }
     },
     "TransactionUpdateRequest": {
       "type": "object",
       "properties": {
+        "cryptocurrency": {
+          "type": "string"
+        },
         "amount": {
           "type": "number"
         },
-        "transaction_price": {
-          "type": "number"
+        "transaction_type": {
+          "type": "string",
+          "enum": ["buy", "sell"]
         }
       }
     }
@@ -603,7 +586,7 @@
       "type": "apiKey",
       "name": "Authorization",
       "in": "header",
-      "description": "Enter your JWT token in the format **Bearer <token>**"
+      "description": "Enter your JWT token in the format **Bearer &lt;token&gt;**"
     }
   },
   "security": [
