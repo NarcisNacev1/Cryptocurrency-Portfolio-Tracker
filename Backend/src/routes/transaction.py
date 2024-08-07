@@ -112,8 +112,21 @@ def view_transactions():
 
     user_id = user.id
 
-    transactions = Transaction.query.filter_by(user_id=user_id).all()
+    crypto = request.args.get('cryptocurrency')
+    transaction_type = request.args.get('transaction_type')
+
+    query = Transaction.query.filter_by(user_id=user_id)
+
+    if crypto:
+        query = query.filter_by(cryptocurrency=crypto)
+
+    if transaction_type:
+        query = query.filter_by(transaction_type=transaction_type)
+
+    transactions = query.all()
+
     return jsonify([transaction.as_dict() for transaction in transactions]), 200
+
 
 @transaction_routes.route('/transactions/update/<int:id>', methods=["PUT"])
 @jwt_required()
