@@ -3,7 +3,6 @@ from Backend.src.models import Transaction, User
 from Backend.src.services.crypto import get_crypto_prices
 from decimal import Decimal
 from flask_jwt_extended import get_jwt_identity, jwt_required
-from flask import request
 
 portfolio_routes = Blueprint('portfolio', __name__)
 

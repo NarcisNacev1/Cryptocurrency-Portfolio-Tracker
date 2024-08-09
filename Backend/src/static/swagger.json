@@ -553,6 +553,9 @@
     "TransactionRequest": {
       "type": "object",
       "properties": {
+        "user_id": {
+          "type": "integer"
+        },
         "cryptocurrency": {
           "type": "string"
         },
@@ -563,8 +566,9 @@
           "type": "string",
           "enum": ["buy", "sell"]
         }
-      }
-    },
+      },
+    "required": ["user_id", "cryptocurrency", "amount", "transaction_type"]
+  },
     "TransactionUpdateRequest": {
       "type": "object",
       "properties": {
